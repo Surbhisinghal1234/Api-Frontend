@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Products = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [photo, setPhoto] = useState('');
-  const [message, setMessage] = useState('');
+  const [photo, setPhoto] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [counter, setCounter] = useState(1);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -21,25 +22,27 @@ const Products = () => {
     if (!image) return;
 
     const data = new FormData();
-    data.append('file', image);
-   
-    data.append('upload_preset', import.meta.env.VITE_UPLOAD_PRESET); 
-    data.append('cloud_name', import.meta.env.VITE_CLOUD_NAME); 
+    data.append("file", image);
+
+    data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+    data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       );
       const cloudData = await response.json();
-      console.log('Cloudinary', cloudData);
+      console.log("Cloudinary", cloudData);
       return cloudData.url;
     } catch (error) {
-      console.error('Error uploading image to Cloudinary', error);
-      setMessage('Error uploading image to Cloudinary');
+      console.error("Error uploading image to Cloudinary", error);
+      setMessage("Error uploading image to Cloudinary");
       return null;
     }
   };
@@ -48,98 +51,117 @@ const Products = () => {
     e.preventDefault();
     setLoading(true);
 
-    try {
     
+
+    try {
       const imageUrl = await uploadImage();
       if (!imageUrl) return;
 
       const userData = {
+        id: counter,
         name,
         price,
         description,
         image: imageUrl,
       };
 
-      await axios.post('https://api-backend-s5jz.onrender.com/products', userData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setMessage('Products added successfully');
-      setName('');
-      setPrice('');
-      setDescription('');
+      await axios.post(
+        "https://api-backend-s5jz.onrender.com/products",
+        // "http://localhost:3000/products",
+
+        userData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setMessage("Products added successfully");
+      setCounter(counter + 1);
+      setName("");
+      setPrice("");
+      setDescription("");
       setImage(null);
-      setPhoto('');
+      setPhoto("");
     } catch (error) {
-      console.error('error', error);
-      setMessage('error');
-    } 
-      setLoading(false);
-    
+      console.error("error", error);
+      setMessage("error");
+    }
+    setLoading(false);
   };
 
+  // price change
+  // const handlePriceChange = (e) => {
+  //   const value = e.target.value;
+  //   const formattedValue = value.replace(/[^0-9.,०-९]/g, '');
+  //   setPrice(formattedValue);
+  // };
   return (
-    <div className='py-[3rem] px-[2rem] flex justify-center flex-col items-center'>
-      <h2 className="text-2xl font-bold" >Add Products</h2>
-      <form className='flex flex-col gap-[1rem] mt-[2rem]' onSubmit={handleSubmit}>
-        <div className='flex gap-[.5rem] items-center'>
+    <div className="py-[3rem] px-[2rem] flex justify-center flex-col items-center">
+      <h2 className="text-2xl font-bold">Add Products</h2>
+      <form
+        className="flex flex-col gap-[1rem] mt-[2rem]"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex gap-[.5rem] items-center">
           <label>Name - </label>
           <input
-            className='shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]'
+            className="shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]"
             type="text"
-            placeholder='Enter Name'
+            placeholder="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <div className='flex gap-[.5rem] items-center'>
+        <div className="flex gap-[.5rem] items-center">
           <label>Price - </label>
           <input
-            className='shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]'
-            type="number"
-            placeholder='Enter Price'
+            className="shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]"
+            type="text"
+            placeholder="Enter Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
           />
         </div>
-        <div className='flex gap-[.5rem] items-center'>
+        <div className="flex gap-[.5rem] items-center">
           <label>Description - </label>
           <input
-            className='shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]'
+            className="shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]"
             type="text"
-            placeholder='Description'
+            placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
-        <div className='flex gap-[.5rem] items-center'>
+        <div className="flex gap-[.5rem] items-center">
           <label>Upload Image -</label>
           <input
             type="file"
-            className=' rounded px-[.5rem] py-[.2rem]'
+            className=" rounded px-[.5rem] py-[.2rem]"
             onChange={handleFileChange}
           />
           {photo && (
             <div>
-              <img src={photo} alt="Preview" style={{ maxWidth: '300px' }} />
+              <img src={photo} alt="Preview" style={{ maxWidth: "300px" }} />
             </div>
           )}
         </div>
         <button
           type="submit"
-          className={`bg-gray-800 w-[7rem] text-white px-[1rem] py-[.5rem] rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-gray-800 w-[7rem] text-white px-[1rem] py-[.5rem] rounded-md ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           disabled={loading}
         >
-          {loading ? 'Adding...' : 'Add'}
+          {loading ? "Adding..." : "Add"}
         </button>
       </form>
       {message && <p>{message}</p>}
       <Link to="/getProducts">
-        <button className='bg-black  text-white px-[1rem] py-[.3rem] mt-[1rem] rounded-md'>
+        <button className="bg-black  text-white px-[1rem] py-[.3rem] mt-[1rem] rounded-md">
           Next
         </button>
       </Link>
