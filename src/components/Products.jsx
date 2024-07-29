@@ -22,12 +22,13 @@ const Products = () => {
 
     const data = new FormData();
     data.append('file', image);
-    data.append('upload_preset', 'testImage');
-    data.append('cloud_name', 'surbhisinghal');
+   
+    data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET); 
+    data.append('cloud_name', process.env.REACT_APP_CLOUD_NAME);  
 
     try {
       const response = await fetch(
-        'https://api.cloudinary.com/v1_1/surbhisinghal/image/upload',
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
         {
           method: 'POST',
           body: data,
@@ -71,16 +72,16 @@ const Products = () => {
       setImage(null);
       setPhoto('');
     } catch (error) {
-      console.error('Error', error);
-      setMessage('Error');
-    } finally {
+      console.error('error', error);
+      setMessage('error');
+    } 
       setLoading(false);
-    }
+    
   };
 
   return (
-    <div className='py-[3rem] px-[2rem]'>
-      <h2>Add User</h2>
+    <div className='py-[3rem] px-[2rem] flex justify-center flex-col items-center'>
+      <h2 className="text-2xl font-bold" >Add Products</h2>
       <form className='flex flex-col gap-[1rem] mt-[2rem]' onSubmit={handleSubmit}>
         <div className='flex gap-[.5rem] items-center'>
           <label>Name - </label>
@@ -119,7 +120,7 @@ const Products = () => {
           <label>Upload Image -</label>
           <input
             type="file"
-            className='shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]'
+            className=' rounded px-[.5rem] py-[.2rem]'
             onChange={handleFileChange}
           />
           {photo && (
@@ -130,7 +131,7 @@ const Products = () => {
         </div>
         <button
           type="submit"
-          className={`bg-gray-800 text-white px-[1rem] py-[.5rem] rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-gray-800 w-[7rem] text-white px-[1rem] py-[.5rem] rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={loading}
         >
           {loading ? 'Adding...' : 'Add'}
@@ -138,7 +139,7 @@ const Products = () => {
       </form>
       {message && <p>{message}</p>}
       <Link to="/getProducts">
-        <button className='bg-black text-white px-[1rem] py-[.3rem] mt-[1rem] rounded-md'>
+        <button className='bg-black  text-white px-[1rem] py-[.3rem] mt-[1rem] rounded-md'>
           Next
         </button>
       </Link>

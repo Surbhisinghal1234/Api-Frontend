@@ -27,7 +27,7 @@ const GetProducts = () => {
 
   return (
     <div className='py-[3rem] px-[2rem]'>
-      <h2>User List</h2>
+      <h2>Product List</h2>
       <ul className='list-disc'>
         {users.map((user) => (
           <li key={user._id} className='mb-[1rem]'>
