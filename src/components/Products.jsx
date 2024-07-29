@@ -23,12 +23,12 @@ const Products = () => {
     const data = new FormData();
     data.append('file', image);
    
-    data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET); 
-    data.append('cloud_name', process.env.REACT_APP_CLOUD_NAME);  
+    data.append('upload_preset', import.meta.env.VITE_UPLOAD_PRESET); 
+    data.append('cloud_name', import.meta.env.VITE_CLOUD_NAME); 
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
         {
           method: 'POST',
           body: data,
@@ -65,7 +65,7 @@ const Products = () => {
           'Content-Type': 'application/json',
         },
       });
-      setMessage('User added successfully');
+      setMessage('Products added successfully');
       setName('');
       setPrice('');
       setDescription('');
