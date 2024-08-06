@@ -47,7 +47,7 @@ const GetProducts = () => {
       <h2>Product List</h2>
       <ul className="list-disc flex flex-wrap gap-[2rem] justify-center">
         {products.map((product) => (
-          <li key={product.id} className="mb-[1rem] gap-[1rem] bg-gradient-to-b from-red-300  to-pink-200 text-black p-4 rounded-lg  flex w-[20rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
+          <li key={product.id} className="mb-[1rem] gap-[1rem] bg-gradient-to-r from-red-200  to-pink-100 text-black p-4 rounded-lg  flex w-[20rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
             <p>ID: {product.id}</p>
             {product.image && (
               <img
@@ -62,7 +62,7 @@ const GetProducts = () => {
            
             <button
               onClick={() => handleDelete(product.id)}
-              className="mt-[1rem] bg-red-500 text-white px-[1rem] py-[.5rem] rounded-md"
+              className="mt-[1rem] bg-red-500 text-white px-[1rem] py-[.5rem] rounded-md w-[5rem] m-auto inline-block"
             >
               Delete
             </button>

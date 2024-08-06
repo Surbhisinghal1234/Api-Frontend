@@ -79,7 +79,7 @@ const Products = () => {
       setMessage("Product added successfully");
       setProduct((prev) => ({
         ...prev,
-        id: prev.id + 1,
+        
         name: "",
         price: "",
         description: "",
