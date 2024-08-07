@@ -43,12 +43,12 @@ const GetProducts = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="py-[3rem] px-[2rem]">
-      <h2>Product List</h2>
-      <ul className="list-disc flex flex-wrap gap-[2rem] justify-center">
+    <div className="py-[3rem] px-[2rem] bg-gradient-one">
+      <h2 className="text-3xl font-bold text-center mb-[2rem]" >Product List</h2>
+      <ul className="list-disc flex flex-wrap gap-[3rem] justify-center">
         {products.map((product) => (
-          <li key={product.id} className="mb-[1rem] gap-[1rem] bg-gradient-one  text-black p-4 rounded-lg  flex w-[20rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
-            <p>ID: {product.id}</p>
+          <li key={product.id} className="mb-[1rem] gap-[1rem] shadow-md shadow-black bg-gray-200  text-black p-4 rounded-xl  flex w-[18rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
+            <p> <span className="font-medium mr-1" >ID:</span> <span>{product.id}</span> </p>
             {product.image && (
               <img
                 src={product.image}
@@ -57,12 +57,12 @@ const GetProducts = () => {
               />
             )}
             <h3 className="text-xl font-bold">{product.name}</h3>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
+            <p  > <span className="font-medium" >Price:</span> <span className="ml-1"> {product.price}</span> </p>
+            <p> <span  className="font-medium mr-1" >Description:</span> <span  >{product.description}</span>  </p>
            
             <button
               onClick={() => handleDelete(product.id)}
-              className="mt-[1rem] bg-red-500 text-white px-[1rem] py-[.5rem] rounded-md w-[5rem] m-auto inline-block"
+              className="mt-[1rem] bg-red-500 text-white px-[1rem] py-[.4rem] rounded-lg w-[5rem] m-auto inline-block"
             >
               Delete
             </button>

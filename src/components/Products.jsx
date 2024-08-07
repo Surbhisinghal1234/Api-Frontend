@@ -78,15 +78,17 @@ const Products = () => {
         }
       );
       setMessage("Product added successfully");
+      console.log("Product added successfully")
       setProduct((prev) => ({
         ...prev,
         
         name: "",
         price: "",
         description: "",
-        image: null,
+        image: "",
       }));
       setPhoto("");
+      // setMessage("")
     } catch (error) {
       console.error("error", error);
       setMessage("Error adding product");
