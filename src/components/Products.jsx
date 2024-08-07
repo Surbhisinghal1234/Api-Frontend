@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Email from "./Email";
+import { v4 as uuid } from 'uuid';
+
 
 const Products = () => {
   const [product, setProduct] = useState({
-    id: 1,
+    id: uuid(),
     name: "",
     price: "",
     description: "",
@@ -23,7 +25,6 @@ const Products = () => {
 
   const uploadImage = async () => {
     if (!product.image) return;
-
     const data = new FormData();
     data.append("file", product.image);
     data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
@@ -67,8 +68,8 @@ const Products = () => {
       };
 
       await axios.post(
-        "https://api-backend-s5jz.onrender.com/products",
-        // "http://localhost:3000/products",
+        // "https://api-backend-s5jz.onrender.com/products",
+        "http://localhost:3000/products",
         productData,
         {
           headers: {
@@ -95,7 +96,7 @@ const Products = () => {
 
   return (
     <>
-      <div className="py-[3rem] px-[2rem] flex justify-center flex-col items-center">
+      <div className="py-[3rem] px-[2rem] flex justify-center flex-col items-center border-2 md:border-gray-400  md:w-[50%] m-auto my-[3rem] rounded-md">
         <h2 className="text-2xl font-bold">Add Products</h2>
         <form
           className="flex flex-col gap-[1rem] mt-[2rem]"

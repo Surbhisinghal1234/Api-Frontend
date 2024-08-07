@@ -11,8 +11,8 @@ const GetProducts = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "https://api-backend-s5jz.onrender.com/prod"
-          // "http://localhost:3000/prod"
+          // "https://api-backend-s5jz.onrender.com/prod"
+          "http://localhost:3000/prod"
         );
         setProducts(response.data);
       } catch (error) {
@@ -28,8 +28,8 @@ const GetProducts = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://api-backend-s5jz.onrender.com/products/${id}`);
-      // await axios.delete(`http://localhost:3000/products/${id}`);
+      // await axios.delete(`https://api-backend-s5jz.onrender.com/products/${id}`);
+      await axios.delete(`http://localhost:3000/products/${id}`);
 
       setProducts(products.filter((product) => product.id !== id));
       alert("Product deleted successfully");
@@ -47,7 +47,7 @@ const GetProducts = () => {
       <h2>Product List</h2>
       <ul className="list-disc flex flex-wrap gap-[2rem] justify-center">
         {products.map((product) => (
-          <li key={product.id} className="mb-[1rem] gap-[1rem] bg-gradient-to-r from-red-200  to-pink-100 text-black p-4 rounded-lg  flex w-[20rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
+          <li key={product.id} className="mb-[1rem] gap-[1rem] bg-gradient-one  text-black p-4 rounded-lg  flex w-[20rem] flex-col h-[25rem] no-scrollbar overflow-auto" >
             <p>ID: {product.id}</p>
             {product.image && (
               <img

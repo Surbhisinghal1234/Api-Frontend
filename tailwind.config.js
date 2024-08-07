@@ -9,7 +9,10 @@ export default {
       backgroundImage: {
         'gradient-one': 'linear-gradient(to right, #ff7e5f8c, #00800061)',
         'gradient-two': 'linear-gradient(to right, #0000ff57, #185a9d8f)',
+        'custom-gradient-bg': 'linear-gradient(270deg, #DF8908 10%, #B415FF 100%)',
+
       },
+     
 
     },
     container: {
