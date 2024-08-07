@@ -11,8 +11,8 @@ const GetProducts = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          // "https://api-backend-s5jz.onrender.com/prod"
-          "http://localhost:3000/prod"
+          "https://api-backend-s5jz.onrender.com/prod"
+          // "http://localhost:3000/prod"
         );
         setProducts(response.data);
       } catch (error) {
@@ -28,8 +28,8 @@ const GetProducts = () => {
 
   const handleDelete = async (id) => {
     try {
-      // await axios.delete(`https://api-backend-s5jz.onrender.com/products/${id}`);
-      await axios.delete(`http://localhost:3000/products/${id}`);
+      await axios.delete(`https://api-backend-s5jz.onrender.com/products/${id}`);
+      // await axios.delete(`http://localhost:3000/products/${id}`);
 
       setProducts(products.filter((product) => product.id !== id));
       alert("Product deleted successfully");

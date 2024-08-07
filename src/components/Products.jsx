@@ -68,8 +68,8 @@ const Products = () => {
       };
 
       await axios.post(
-        // "https://api-backend-s5jz.onrender.com/products",
-        "http://localhost:3000/products",
+        "https://api-backend-s5jz.onrender.com/products",
+        // "http://localhost:3000/products",
         productData,
         {
           headers: {
