@@ -12,6 +12,7 @@ const Products = () => {
     price: "",
     description: "",
     image: null,
+    featured:"true"
   });
   const [photo, setPhoto] = useState("");
   const [message, setMessage] = useState("");
@@ -68,8 +69,8 @@ const Products = () => {
       };
 
       await axios.post(
-        "https://api-backend-s5jz.onrender.com/products",
-        // "http://localhost:3000/products",
+        // "https://api-backend-s5jz.onrender.com/products",
+        "http://localhost:3000/products",
         productData,
         {
           headers: {
