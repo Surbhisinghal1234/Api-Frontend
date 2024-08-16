@@ -12,7 +12,7 @@ const Products = () => {
     price: "",
     description: "",
     image: null,
-    featured:"true"
+    // featured:"true"
   });
   const [photo, setPhoto] = useState("");
   const [message, setMessage] = useState("");
