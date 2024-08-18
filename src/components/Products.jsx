@@ -5,7 +5,7 @@ import Email from "./Email";
 import { v4 as uuid } from 'uuid';
 
 const Products = () => {
-  const baseUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
+  const baseUrl = import.meta.env.VITE_APP_API_URL;
   const [product, setProduct] = useState({
     id: uuid(),
     name: "",
