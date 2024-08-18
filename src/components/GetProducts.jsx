@@ -7,7 +7,7 @@ const GetProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const baseUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
+  const baseUrl = import.meta.env.VITE_APP_API_URL;
   const navigate = useNavigate(); 
 
   useEffect(() => {
