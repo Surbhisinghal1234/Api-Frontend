@@ -6,13 +6,17 @@ import { v4 as uuid } from 'uuid';
 
 
 const Products = () => {
+
+  const baseUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000" ;
+
   const [product, setProduct] = useState({
     id: uuid(),
     name: "",
     price: "",
     description: "",
     image: null,
-    // featured:"true"
+    category: "", 
+   
   });
   const [photo, setPhoto] = useState("");
   const [message, setMessage] = useState("");
@@ -66,10 +70,11 @@ const Products = () => {
         price: product.price,
         description: product.description,
         image: imageUrl,
+        category: product.category, 
       };
 
       await axios.post(
-        "https://api-backend-s5jz.onrender.com/products",
+        `${baseUrl}/products` ,
         // "http://localhost:3000/products",
         productData,
         {
@@ -79,7 +84,7 @@ const Products = () => {
         }
       );
       setMessage("Product added successfully");
-      console.log("Product added successfully")
+      console.log(productData,"Product added successfully")
       setProduct((prev) => ({
         ...prev,
         
@@ -87,6 +92,7 @@ const Products = () => {
         price: "",
         description: "",
         image: "",
+        category: "",  
       }));
       setPhoto("");
       // setMessage("")
@@ -157,6 +163,19 @@ const Products = () => {
               </div>
             )}
           </div>
+          <div className="flex gap-[.5rem] items-center">
+            <label>Category - </label>
+            <input
+              className="shadow-sm shadow-black rounded px-[.5rem] py-[.2rem]"
+              type="text"
+              placeholder="Enter Category"
+              value={product.category}
+              onChange={(e) =>
+                setProduct((prev) => ({ ...prev, category: e.target.value }))
+              }
+              required
+            />
+          </div>
           <button
             type="submit"
             className={`bg-gray-800 w-[7rem] text-white px-[1rem] py-[.5rem] rounded-md ${
@@ -181,3 +200,7 @@ const Products = () => {
 };
 
 export default Products;
+
+
+
+

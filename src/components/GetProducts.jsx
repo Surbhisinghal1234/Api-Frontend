@@ -6,17 +6,24 @@ const GetProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const baseUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000" ;
+
+
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "https://api-backend-s5jz.onrender.com/prod"
+          `${baseUrl}/prod`
+         
         //  "http://localhost:3000/prod?sort=price&orderby=desc"
+        // "http://localhost:3000/prod"
+
          
 
 
         );
+        console.log(response.data,"abc")
         setProducts(response.data);
       } catch (error) {
         console.error("Error", error);
@@ -33,7 +40,7 @@ const GetProducts = () => {
  
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://api-backend-s5jz.onrender.com/products/${id}`);
+      await axios.delete(`${baseUrl}/products/${id}`);
       // await axios.delete(`http://localhost:3000/products/${id}`);
 
       setProducts(products.filter((product) => product.id !== id));
@@ -64,6 +71,8 @@ const GetProducts = () => {
             <h3 className="text-xl font-bold">{product.name}</h3>
             <p  > <span className="font-medium" >Price:</span> <span className="ml-1"> {product.price}</span> </p>
             <p> <span  className="font-medium mr-1" >Description:</span> <span  >{product.description}</span>  </p>
+            <p> <span  className="font-medium mr-1" >Category:</span> <span  >{product.category}</span>  </p>
+
            
             <button
               onClick={() => handleDelete(product.id)}
