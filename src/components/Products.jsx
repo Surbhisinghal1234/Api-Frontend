@@ -5,7 +5,7 @@ import Email from "./Email";
 import { v4 as uuid } from 'uuid';
 
 const Products = () => {
-  const baseUrl = import.meta.env.VITE_APP_API_URL;
+  const baseUrl = "https://api-backend-s5jz.onrender.com";
   const [product, setProduct] = useState({
     id: uuid(),
     name: "",

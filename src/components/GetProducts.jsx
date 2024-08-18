@@ -7,7 +7,7 @@ const GetProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const baseUrl = import.meta.env.VITE_APP_API_URL;
+  const baseUrl = "https://api-backend-s5jz.onrender.com";
   const navigate = useNavigate(); 
 
   useEffect(() => {
