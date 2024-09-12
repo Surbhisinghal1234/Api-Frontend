@@ -1,38 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import Products from './components/Products';
-import GetProducts from './components/GetProducts';
-import {RouterProvider, createBrowserRouter} from "react-router-dom"
-// import EditProduct from './components/EditProduct';
+import GetProducts from './pages/GetProducts';
+import { RouterProvider, createBrowserRouter} from "react-router-dom"
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
+import PostProducts from './pages/PostProducts';
+import { ProductProvider } from './context/ContextProvider';
 
 function App() {
  const router = createBrowserRouter(
   [
     {
-      path: "/",
-      element:(
-        <Products/>
-      )
+      path: '/',
+      element: <Layout />, 
+      children: [
+        {
+          index: true, 
+          element: <Home />, 
+        },
+        {
+          path: 'postProducts',
+          element: <PostProducts />, 
+        },
+        {
+          path: 'getProducts',
+          element: <GetProducts />, 
+        },
+        {
+          path: 'editProduct/:id',
+          element: <PostProducts />, 
+        },
+        {
+          path: 'contact',
+          element: <Contact/>,
+        },
+      ],
     },
-    {
-      path: "/getProducts",
-      element:(
-        
-        <GetProducts/>
-      ),
-    },
-    // {
-    //   path: '/editProduct/:id',
-    //   element:(
-        
-    //     <EditProduct/>
-    //   ),
-    // },
+   
   ]
  )
 
   return (
 <>
-<RouterProvider router={router}/>
+<ProductProvider>
+<RouterProvider router={router} /> 
+</ProductProvider>
+
+
+
 </>
   );
 }

@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react"; 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Email from "./Email";
 import { v4 as uuid } from 'uuid';
+import { editProducts, postProducts } from "../api/Api";
 
-const Products = () => {
-  const baseUrl = "https://api-backend-s5jz.onrender.com";
+const PostProducts = () => {
   const [product, setProduct] = useState({
-    id: uuid(),
+    id: "", 
     name: "",
     price: "",
     description: "",
     image: null,
     category: "",
+    featured: false,
   });
   const [photo, setPhoto] = useState("");
   const [message, setMessage] = useState("");
@@ -24,6 +23,9 @@ const Products = () => {
     if (location.state && location.state.product) {
       setProduct(location.state.product);
       setPhoto(location.state.product.image);
+    } else {
+      // Agar add new product ho, toh id generate karo
+      setProduct(prev => ({ ...prev, id: uuid() }));
     }
   }, [location.state]);
 
@@ -69,34 +71,37 @@ const Products = () => {
     try {
       const imageUrl = await uploadImage();
       if (!imageUrl) return;
-
+    
       const productData = {
         ...product,
         image: imageUrl,
+       
       };
 
-      if (product.id) {
-        await axios.put(`${baseUrl}/products/${product.id}`, productData, {
-          headers: { "Content-Type": "application/json" },
-        });
+      // Agar product ka id hai, toh edit route pe jana hai 
+      if (location.state && location.state.product) {
+       
+        await editProducts(product.id, productData);
         setMessage("Product updated successfully");
-        alert("Product updated successfully")
-      } else {
-        await axios.post(`${baseUrl}/products`, productData, {
-          headers: { "Content-Type": "application/json" },
-        });
+        alert("Product updated successfully");
+      }
+       else {
+       // post route
+       await postProducts(productData)
+       
         setMessage("Product added successfully");
-        alert("Product added successfully")
-
+        alert("Product added successfully");
       }
 
+      // Form reset
       setProduct({
-        id: uuid(),
+        id: uuid(), 
         name: "",
         price: "",
         description: "",
         image: null,
         category: "",
+         featured: false,
       });
       setPhoto("");
       navigate("/getProducts");
@@ -108,10 +113,19 @@ const Products = () => {
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    
+    setProduct((prev) => ({
+      ...prev,
+      featured: e.target.checked,
+    }));
+  };
   return (
     <>
-      <div className="py-[3rem] px-[2rem] flex justify-center flex-col items-center border-2 md:border-gray-400 md:w-[50%] m-auto my-[3rem] rounded-md">
-        <h2 className="text-2xl font-bold">{product.id ? "Edit Product" : "Add Product"}</h2>
+      <div className="py-[1.7rem] px-[2rem] flex justify-center flex-col items-center border-2 md:border-gray-400 md:w-[50%] m-auto my-[3rem] rounded-md">
+
+        <h2 className="text-2xl font-bold">Add Product</h2>
+
         <form className="flex flex-col gap-[1rem] mt-[2rem]" onSubmit={handleSubmit}>
           <div className="flex gap-[.5rem] items-center">
             <label>Name - </label>
@@ -147,12 +161,13 @@ const Products = () => {
             />
           </div>
           <div className="flex flex-col lg:flex-row gap-[.5rem] items-center">
-          <div className="flex gap-4">  <label>Upload Image - </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
+            <div className="flex gap-4">  
+              <label>Upload Image - </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
             </div>
             {photo && <img src={photo} alt="Preview" className="w-[100px] h-[100px] mt-[1rem]" />}
           </div>
@@ -167,9 +182,17 @@ const Products = () => {
               required
             />
           </div>
+          <div className="flex gap-[.5rem] items-center">
+            <label>Featured - </label>
+            <input
+              type="checkbox"
+              checked={product.featured}
+              onChange={handleCheckboxChange} 
+            />
+          </div>
           <button
             type="submit"
-            className="mt-[1rem] bg-slate-500 text-white px-[1rem] py-[.4rem] rounded-lg w-[5rem] m-auto inline-block"
+            className="mt-[1rem] bg-slate-600 hover:bg-slate-800 transition-all ease-in-out duration-300 text-white px-[1rem] py-[.4rem] rounded-lg w-[5rem] m-auto inline-block"
             disabled={loading}
           >
             {loading ? "Saving..." : "Save"}
@@ -177,13 +200,10 @@ const Products = () => {
         </form>
         {message && <p className="mt-[1rem] text-red-500">{message}</p>}
       </div>
-      <Link to="/getProducts" className=" m-auto rounded-md py-2 px-4  text-center text-white w-[11rem] block bg-slate-900 my-[2rem]">Go to Product List</Link>
-      <Email />
+      <Link to="/getProducts" className=" m-auto rounded-md py-2 px-4 text-center text-white w-[11rem] block bg-slate-900 my-[2rem]">Go to Product List</Link>
+      
     </>
   );
 };
 
-export default Products;
-
-
-
+export default PostProducts;
