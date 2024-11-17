@@ -16,15 +16,16 @@ function App() {
       children: [
         {
           index: true, 
-          element: <Home />, 
-        },
-        {
-          path: 'postProducts',
           element: <PostProducts />, 
         },
+       
         {
           path: 'getProducts',
           element: <GetProducts />, 
+        },
+        {
+          path: 'featuredProducts',
+          element: < Home/>, 
         },
         {
           path: 'editProduct/:id',

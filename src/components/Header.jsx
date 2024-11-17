@@ -46,19 +46,20 @@ const Header = () => {
                   to="/"
                   className="text-white hover:bg-white hover:text-black px-3 py-2 rounded-md  font-medium"
                 >
-                  Home
+                 Post Products
+                </Link>
+               
+                <Link
+                  to="/featuredProducts"
+                  className="text-white hover:bg-white hover:text-black px-3 py-2 rounded-md font-medium"
+                >
+                 Featured Products
                 </Link>
                 <Link
                   to="/getProducts"
                   className="text-white hover:bg-white hover:text-black px-3 py-2 rounded-md  font-medium"
                 >
                  Get Products
-                </Link>
-                <Link
-                  to="/postProducts"
-                  className="text-white hover:bg-white hover:text-black px-3 py-2 rounded-md font-medium"
-                >
-                  Post Products
                 </Link>
                 <Link
                   to="/contact"
